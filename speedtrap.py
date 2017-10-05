@@ -1,7 +1,7 @@
-import datetime
+import datetime as dt
 #speed trap
 
-def timeVerify(t):
+def timeValidate(t):
 
 	#check the length
 	if len(t) != 8:
@@ -31,7 +31,7 @@ def timeVerify(t):
 	return True
 
 
-print("Speed Trap Calculator. Distance = 1 Mile.")
+print("Speed Trap Calculator. \nDistance = 1 Mile.")
 
 dist = 1
 #input("All times are 6 digit 24hr format, eg:03:44:02\nPress 'Enter' key to continue.")
@@ -40,12 +40,22 @@ dist = 1
 
 #print(t2,t1)
 
-s1 = '08:59:59'
-s2 = '10:15:49' # for example
+s1 = '00:06:00'
+s2 = '00:06:08' # for example
 
-print(timeVerify(s1))
-print(timeVerify(s2))
+#validate the times
+valid = timeValidate(s1)
+valid = timeValidate(s2)
 
-FMT = '%H:%M:%S'
-tdelta = datetime.datetime.strptime(s2, FMT) - datetime.datetime.strptime(s1, FMT)
-print (tdelta)
+#convert to timedeltas
+t1 = dt.timedelta(hours=int(s1[0:2]),minutes=int(s1[3:5]),seconds=int(s1[6:8]))
+t2 = dt.timedelta(hours=int(s2[0:2]),minutes=int(s2[3:5]),seconds=int(s2[6:8]))
+
+elapsedSeconds = (t2-t1).total_seconds()
+
+print('time',elapsedSeconds,'s')
+
+speed = int(1*3600/elapsedSeconds)
+print ("Speed =",speed,"mph")
+
+
